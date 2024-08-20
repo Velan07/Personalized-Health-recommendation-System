@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Home</title>
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+
+	<style>
+        .btn-group button {
+            background-color: #4CAF50; /* Green */
+            border: 1px solid green;
+            color: white;
+            padding: 10px 24px;
+            cursor: pointer;
+            float: left;
+            width: 100%;
+        }
+
+        .btn-group button:hover {
+            background-color: #3e8e41;
+        }
+
+        .content {
+            margin-top: 20px;
+            border: 1px solid #ddd;
+            padding: 20px;
+            display: none; /* Initially hide the content */
+        }
+
+		</style>
+</head>
+<body>
+	<div>
+		<center>
+			<h1>WELCOME</h1>
+			<h2>Select Your Symtoms</h2>
+			<form method="POST">
+				{% csrf_token %}
+				<label for="item-select">Choose an Symtoms:</label>
+				<select id="item-select" name="all_symptoms" multiple="multiple" style="width: 100%;">
+					{% for item in symptoms_list %}
+						<option value="{{ item }}"> {{ item }}</option>
+					{% endfor %}
+				</select>
+				<button type="submit">Submit</button>
+			</form>
+			<h2>Peridicted Disease : {{ predicted_disease }}</h2>
+		</center>
+	</div>
+	<div>
+		<div class="btn-group">
+			
+			<div>
+				<button type="submit" name="description" value="1" onclick="toggleSection('description-content')">Description</button>
+				<div class="content" id="description-content" style="display:none;">
+					<h3>Description</h3>
+					{% for i in desc %}
+					<ul>
+						<li><p>{{ i }}</p></li>
+					</ul>
+					{% endfor %}
+				</div>
+			</div>
+			
+			<div>
+				<button type="submit" name="precaution" value="1" onclick="toggleSection('precaution-content')">Precautions</button>
+				<div class="content" id="precaution-content" style="display:none;">
+					<h3>Precaution</h3>
+					{% for i in prec %}
+					<ul>
+						<li><p>{{ i }}</p></li>
+					</ul>
+					{% endfor %}
+				</div>
+			</div>
+			
+			<div>
+				<button type="submit" name="diet" value="1" onclick="toggleSection('diet-content')">Diets</button>
+				<div class="content" id="diet-content" style="display:none;">
+					<h3>Diet</h3>
+					{% for i in diet %}
+					<ul>
+						<li><p>{{ i }}</p></li>
+					</ul>
+					{% endfor %}
+				</div>
+			</div>
+			
+			<div>
+				<button type="submit" name="medication" value="1" onclick="toggleSection('medication-content')">Medications</button>
+				<div class="content" id="medication-content" style="display:none;">
+					<h3>Medication</h3>
+					{% for i in medi %}
+					<ul>
+						<li><p>{{ i }}</p></li>
+					</ul>
+					{% endfor %}
+				</div>
+			</div>
+			
+			<div>
+				<button type="submit" name="workout" value="1" onclick="toggleSection('workout-content')">workouts</button>
+				<div class="content" id="workout-content" style="display:none;">
+					<h3>workout</h3>
+					{% for i in workout %}
+					<ul>
+						<li><p>{{ i }}</p></li>
+					</ul>
+					{% endfor %}
+				</div>
+			</div>
+
+			<div>
+				<button type="submit" name="common symtoms" value="1" onclick="toggleSection('symptoms-content')">Common Symptoms</button>
+				<div class="content" id="symptoms-content" style="display:none;">
+					<h3>Common Symptoms</h3>
+					{% for i in com_syms %}
+					<ul>
+						<li><p>{{ i }}</p></li>
+					</ul>
+					{% endfor %}
+				</div>
+			</div>
+
+		</div>
+	</div>
+	
+
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            $('#item-select').select2({
+				placeholder: "Select Symptoms",
+				allowclear: true,
+				width: "30%",
+			});
+        });
+    </script>
+	<script>
+        function toggleSection(sectionId) {
+            var section = document.getElementById(sectionId);
+            if (section.style.display === "none") {
+                section.style.display = "block";
+            } else {
+                section.style.display = "none";
+            }
+        }
+    </script>
+</body>
+</html>
